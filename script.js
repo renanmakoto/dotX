@@ -7,7 +7,6 @@ const scrollTopBtn = document.getElementById('scroll-top');
 const typedText = document.getElementById('typed-text');
 const skillBars = document.querySelectorAll('.skill-progress');
 const statNumbers = document.querySelectorAll('.stat-number');
-const contactForm = document.getElementById('contact-form');
 
 const phrases = [
   'scales with your business',
@@ -204,22 +203,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealElements.forEach(el => revealObserver.observe(el));
 
-if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(contactForm);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const subject = formData.get('subject') || 'Project Inquiry';
-    const message = formData.get('message');
-
-    const mailtoLink = `mailto:contact@dotextension.dev?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-    
-    window.location.href = mailtoLink;
-    contactForm.reset();
-  });
-}
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
@@ -235,5 +218,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
-
 
