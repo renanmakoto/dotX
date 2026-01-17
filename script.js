@@ -1,12 +1,12 @@
 const navbar = document.getElementById('navbar')
-const navMenu = document.getElementById('nav-menu');
-const navToggle = document.getElementById('nav-toggle');
-const navLinks = document.querySelectorAll('.nav-link');
-const themeToggle = document.getElementById('theme-toggle');
-const scrollTopBtn = document.getElementById('scroll-top');
-const typedText = document.getElementById('typed-text');
-const skillBars = document.querySelectorAll('.skill-progress');
-const statNumbers = document.querySelectorAll('.stat-number');
+const navMenu = document.getElementById('nav-menu')
+const navToggle = document.getElementById('nav-toggle')
+const navLinks = document.querySelectorAll('.nav-link')
+const themeToggle = document.getElementById('theme-toggle')
+const scrollTopBtn = document.getElementById('scroll-top')
+const typedText = document.getElementById('typed-text')
+const skillBars = document.querySelectorAll('.skill-progress')
+const statNumbers = document.querySelectorAll('.stat-number')
 
 const phrases = [
   'scales with your business',
@@ -14,208 +14,208 @@ const phrases = [
   'users actually love',
   'launches on time',
   'stands the test of time'
-];
+]
 
-let phraseIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-let typeDelay = 100;
+let phraseIndex = 0
+let charIndex = 0
+let isDeleting = false
+let typeDelay = 100
 
 function type() {
-  const currentPhrase = phrases[phraseIndex];
+  const currentPhrase = phrases[phraseIndex]
   
   if (isDeleting) {
-    typedText.textContent = currentPhrase.substring(0, charIndex - 1);
-    charIndex--;
-    typeDelay = 50;
+    typedText.textContent = currentPhrase.substring(0, charIndex - 1)
+    charIndex--
+    typeDelay = 50
   } else {
-    typedText.textContent = currentPhrase.substring(0, charIndex + 1);
-    charIndex++;
-    typeDelay = 100;
+    typedText.textContent = currentPhrase.substring(0, charIndex + 1)
+    charIndex++
+    typeDelay = 100
   }
 
   if (!isDeleting && charIndex === currentPhrase.length) {
-    isDeleting = true;
-    typeDelay = 2000;
+    isDeleting = true
+    typeDelay = 2000
   } else if (isDeleting && charIndex === 0) {
-    isDeleting = false;
-    phraseIndex = (phraseIndex + 1) % phrases.length;
-    typeDelay = 500;
+    isDeleting = false
+    phraseIndex = (phraseIndex + 1) % phrases.length
+    typeDelay = 500
   }
 
-  setTimeout(type, typeDelay);
+  setTimeout(type, typeDelay)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(type, 1000);
-});
+  setTimeout(type, 1000)
+})
 
 navToggle.addEventListener('click', () => {
-  navMenu.classList.toggle('active');
-  navToggle.classList.toggle('active');
-  navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active'));
-});
+  navMenu.classList.toggle('active')
+  navToggle.classList.toggle('active')
+  navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active'))
+})
 
 navLinks.forEach(link => {
   link.addEventListener('click', function(e) {
-    e.preventDefault();
-    const href = this.getAttribute('href');
-    const target = document.querySelector(href);
+    e.preventDefault()
+    const href = this.getAttribute('href')
+    const target = document.querySelector(href)
     
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      target.scrollIntoView({ behavior: 'smooth' })
     }
     
-    navLinks.forEach(n => n.classList.remove('active'));
-    this.classList.add('active');
+    navLinks.forEach(n => n.classList.remove('active'))
+    this.classList.add('active')
     
-    navMenu.classList.remove('active');
-    navToggle.classList.remove('active');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
+    navMenu.classList.remove('active')
+    navToggle.classList.remove('active')
+    navToggle.setAttribute('aria-expanded', 'false')
+  })
+})
 
 document.addEventListener('click', (e) => {
   if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
-    navMenu.classList.remove('active');
-    navToggle.classList.remove('active');
-    navToggle.setAttribute('aria-expanded', 'false');
+    navMenu.classList.remove('active')
+    navToggle.classList.remove('active')
+    navToggle.setAttribute('aria-expanded', 'false')
   }
-});
+})
 
 window.addEventListener('scroll', () => {
   if (window.scrollY > 50) {
-    navbar.classList.add('scrolled');
+    navbar.classList.add('scrolled')
   } else {
-    navbar.classList.remove('scrolled');
+    navbar.classList.remove('scrolled')
   }
 
   if (window.scrollY > 400) {
-    scrollTopBtn.classList.add('visible');
+    scrollTopBtn.classList.add('visible')
   } else {
-    scrollTopBtn.classList.remove('visible');
+    scrollTopBtn.classList.remove('visible')
   }
 
-  updateActiveNav();
-});
+  updateActiveNav()
+})
 
 function updateActiveNav() {
-  const sections = document.querySelectorAll('section[id]');
-  const scrollPos = window.scrollY + 100;
+  const sections = document.querySelectorAll('section[id]')
+  const scrollPos = window.scrollY + 100
 
   sections.forEach(section => {
-    const top = section.offsetTop;
-    const height = section.offsetHeight;
-    const id = section.getAttribute('id');
-    const link = document.querySelector(`.nav-link[href="#${id}"]`);
+    const top = section.offsetTop
+    const height = section.offsetHeight
+    const id = section.getAttribute('id')
+    const link = document.querySelector(`.nav-link[href="#${id}"]`)
 
     if (link) {
       if (scrollPos >= top && scrollPos < top + height) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
+        navLinks.forEach(l => l.classList.remove('active'))
+        link.classList.add('active')
       }
     }
-  });
+  })
 }
 
 scrollTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+})
 
-const savedTheme = localStorage.getItem('theme');
+const savedTheme = localStorage.getItem('theme')
 if (savedTheme) {
-  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.documentElement.setAttribute('data-theme', savedTheme)
 } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.documentElement.setAttribute('data-theme', 'dark');
+  document.documentElement.setAttribute('data-theme', 'dark')
 }
 
 themeToggle.addEventListener('click', () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-});
+  const currentTheme = document.documentElement.getAttribute('data-theme')
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+  document.documentElement.setAttribute('data-theme', newTheme)
+  localStorage.setItem('theme', newTheme)
+})
 
 const observerOptions = {
   threshold: 0.2,
   rootMargin: '0px'
-};
+}
 
 const skillObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      const bar = entry.target;
-      const width = bar.getAttribute('data-width');
-      bar.style.width = `${width}%`;
-      skillObserver.unobserve(bar);
+      const bar = entry.target
+      const width = bar.getAttribute('data-width')
+      bar.style.width = `${width}%`
+      skillObserver.unobserve(bar)
     }
-  });
-}, observerOptions);
+  })
+}, observerOptions)
 
-skillBars.forEach(bar => skillObserver.observe(bar));
+skillBars.forEach(bar => skillObserver.observe(bar))
 
 function animateNumber(element, target, duration = 2000) {
-  let start = 0;
-  const increment = target / (duration / 16);
+  let start = 0
+  const increment = target / (duration / 16)
   
   function update() {
-    start += increment;
+    start += increment
     if (start < target) {
-      element.textContent = Math.floor(start);
-      requestAnimationFrame(update);
+      element.textContent = Math.floor(start)
+      requestAnimationFrame(update)
     } else {
-      element.textContent = target;
+      element.textContent = target
     }
   }
   
-  update();
+  update()
 }
 
 const statObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      const target = parseInt(entry.target.getAttribute('data-target'));
-      animateNumber(entry.target, target);
-      statObserver.unobserve(entry.target);
+      const target = parseInt(entry.target.getAttribute('data-target'))
+      animateNumber(entry.target, target)
+      statObserver.unobserve(entry.target)
     }
-  });
-}, observerOptions);
+  })
+}, observerOptions)
 
-statNumbers.forEach(num => statObserver.observe(num));
+statNumbers.forEach(num => statObserver.observe(num))
 
-const revealElements = document.querySelectorAll('.skill-category, .service-card, .contact-method, .stat-card, .highlight-item, .process-step, .work-card');
+const revealElements = document.querySelectorAll('.skill-category, .service-card, .contact-method, .stat-card, .highlight-item, .process-step, .work-card')
 
 revealElements.forEach((el, index) => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(30px)';
-  el.style.transition = `opacity 0.6s ease ${index * 0.05}s, transform 0.6s ease ${index * 0.05}s`;
-});
+  el.style.opacity = '0'
+  el.style.transform = 'translateY(30px)'
+  el.style.transition = `opacity 0.6s ease ${index * 0.05}s, transform 0.6s ease ${index * 0.05}s`
+})
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-      revealObserver.unobserve(entry.target);
+      entry.target.style.opacity = '1'
+      entry.target.style.transform = 'translateY(0)'
+      revealObserver.unobserve(entry.target)
     }
-  });
-}, { threshold: 0.1 });
+  })
+}, { threshold: 0.1 })
 
-revealElements.forEach(el => revealObserver.observe(el));
+revealElements.forEach(el => revealObserver.observe(el))
 
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
-    const href = this.getAttribute('href');
+    const href = this.getAttribute('href')
     if (href !== '#') {
-      e.preventDefault();
-      const target = document.querySelector(href);
+      e.preventDefault()
+      const target = document.querySelector(href)
       if (target) {
-        const offset = 80;
-        const position = target.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top: position, behavior: 'smooth' });
+        const offset = 80
+        const position = target.getBoundingClientRect().top + window.pageYOffset - offset
+        window.scrollTo({ top: position, behavior: 'smooth' })
       }
     }
-  });
-});
+  })
+})
 
